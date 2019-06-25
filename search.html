@@ -68,21 +68,33 @@ input[type=submit] {
 
 
 </style>
-</head>
-<script type="application/json"  id="aaa">
-{"COMS20001": {"credits": 20, "assessments": [{"weight": null, "deadline": "n/a"}, {"weight": "25.0", "deadline": "Thu 06 Dec 2018"}, {"weight": "25.0", "deadline": "Fri 05 Apr 2019"}, {"weight": "50.0", "deadline": "Not Set"}, {"weight": "0.0", "deadline": "Wed 12 Jun 2019"}], "tb": "4"}, "COMS20002": {"credits": 10, "assessments": [{"weight": "5.0", "deadline": "Thu 08 Nov 2018"}, {"weight": "5.0", "deadline": "Mon 31 Dec 2018"}, {"weight": "5.0", "deadline": "Thu 20 Dec 2018"}, {"weight": "5.0", "deadline": "Mon 31 Dec 2018"}, {"weight": "80.0", "deadline": "Not Set"}], "tb": "1"}}
-</script>
-     <script type="text/javascript" >
-        function load() {
-             var mydata = JSON.parse(document.getElementById('aaa').innerHTML);
-             // alert(mydata)
-             var units = [];
-             for (x in mydata){
-               units.push(x)
-             }
-             /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-             autocomplete(document.getElementById("myInput"), units);
+    </head>
+          <script>
+              var request = new XMLHttpRequest();
 
+              function load()
+              {
+                request.onreadystatechange = function() {
+                  if (request.readyState == 4 && request.status == 200) fill(parseJSON(request.responseText));
+                };
+
+                request.open("GET", "plain-data.json", true);
+                request.send();
+              }
+
+              function parseJSON(text)
+              {
+                data = JSON.parse(text);
+                alert(data.name + " is " + data.age + " and drives a " + data.car);
+              }
+              function fill(mydata){
+                 var units = [];
+                 for (x in mydata){
+                   units.push(x)
+                 }
+                 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+                 autocomplete(document.getElementById("myInput"), units);
+               }
          }
 
      </script>

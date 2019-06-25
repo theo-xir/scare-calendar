@@ -91,12 +91,13 @@ input[type=submit] {
                  for (x in mydata){
                    units.push(x)
                  }
-                 /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-                 autocomplete(document.getElementById("myInput"), units);
+                 return units
+                 // /*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+                 // autocomplete(document.getElementById("myInput"), units);
                }
 
      </script>
-<body onload="load()">
+<body>
 
 <h2>Autocomplete</h2>
 
@@ -209,7 +210,7 @@ function autocomplete(inp, arr) {
 }
 
 /*An array containing all the unit names:*/
-
+units=load()
 </script>
 
 </body>

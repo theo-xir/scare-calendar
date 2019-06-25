@@ -191,13 +191,11 @@ input[type=submit] {
                  document.getElementById("add").onclick = function() {
                     //First things first, we need our text:
                     var text = document.getElementById("myInput").value; //.value gets input values
-
-                    //Now construct a quick list element
-                    var li = "<li>" + text + "</li>";
-
-
+                    var node = document.createElement("LI");                 // Create a <li> node
+                    var textnode = document.createTextNode(text);         // Create a text node
+                    node.appendChild(textnode);
                     //Now use appendChild and add it to the list!
-                    document.getElementById("list").appendChild(li);
+                    document.getElementById("list").appendChild(node);
                 }
                }
 

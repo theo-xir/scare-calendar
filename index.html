@@ -77,7 +77,7 @@ input[type=submit] {
                 request.onreadystatechange = function() {
                   if (request.readyState == 4 && request.status == 200) fill(parseJSON(request.responseText));
                 };
-                request.open("GET", "package-lock.json", true);
+                request.open("GET", "data.json", true);
                 request.send();
               }
 

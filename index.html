@@ -75,16 +75,15 @@ input[type=submit] {
               function load()
               {
                 request.onreadystatechange = function() {
-                  alert(request.responseText)
                   if (request.readyState == 4 && request.status == 200) fill(parseJSON(request.responseText));
                 };
-
                 request.open("GET", "package-lock.json", true);
                 request.send();
               }
 
               function parseJSON(text)
               {
+                alert(JSON.parse(text))
                 return JSON.parse(text);
               }
               function fill(mydata){
@@ -98,7 +97,7 @@ input[type=submit] {
                }
 
      </script>
-<body>
+<body onload="load()">
 
 <h2>Autocomplete</h2>
 

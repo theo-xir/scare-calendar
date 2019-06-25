@@ -83,7 +83,6 @@ input[type=submit] {
 
               function parseJSON(text)
               {
-                alert(JSON.parse(text))
                 return JSON.parse(text);
               }
               function fill(mydata){
@@ -91,6 +90,7 @@ input[type=submit] {
                  for (x in mydata){
                    units.push(x)
                  }
+                 alert(units)
                  autocomplete(document.getElementById("myInput"), units);
                }
                function autocomplete(inp, arr) {

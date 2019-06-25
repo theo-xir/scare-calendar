@@ -75,6 +75,7 @@ input[type=submit] {
               function load()
               {
                 request.onreadystatechange = function() {
+                  alert(request.responseText)
                   if (request.readyState == 4 && request.status == 200) fill(parseJSON(request.responseText));
                 };
 
@@ -84,7 +85,6 @@ input[type=submit] {
 
               function parseJSON(text)
               {
-                alert(JSON.parse(text))
                 return JSON.parse(text);
               }
               function fill(mydata){

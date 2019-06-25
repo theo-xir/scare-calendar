@@ -1,17 +1,27 @@
 <!doctype html>
 <html>
     <head>
-        <script type="application/json" src="data.json" ></script>
-             <script type="text/javascript" >
-                function load() {
-                     var mydata = JSON.parse(data);
-                     alert(mydata);
-                 }
+        <script>
+            var request = new XMLHttpRequest();
+
+            function load()
+            {
+              request.onreadystatechange = function() {
+                if (request.readyState == 4 && request.status == 200) parseJSON(request.responseText);
+              };
+
+              request.open("GET", "package-lock.json", true);
+              request.send();
+            }
+
+            function parseJSON(text)
+            {
+              data = JSON.parse(text);
+              alert(data);
+            }
+
         </script>
     </head>
     <body onload="load()">
-    <div id= "data">
-
-    </div>
     </body>
 </html>

@@ -198,7 +198,7 @@ input[type=submit] {
                     request.onreadystatechange = function() {
                       if (request.readyState == 4 && request.status == 200) {
                         var obj = parseJSON(request.responseText);
-                        document.getElementById("demo").innerHTML += obj[text].credits
+                        document.getElementById("demo").innerHTML += parseInt(obj[text].credits)
                       }
                     };
                     request.open("GET", "data.json", true);
@@ -206,7 +206,6 @@ input[type=submit] {
                     document.getElementById('myInput').value = ''
                 }
                }
-
      </script>
 <body onload="load()">
 Include weekends?

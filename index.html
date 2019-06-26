@@ -198,7 +198,7 @@ input[type=submit] {
                     request.onreadystatechange = function() {
                       if (request.readyState == 4 && request.status == 200) {
                         var obj = parseJSON(request.responseText);
-                        document.getElementById("demo").innerHTML += parseInt(obj[text].credits)
+                        document.getElementById("credittotal").innerHTML = parseInt(obj[text].credits) + parseInt(document.getElementById("credittotal").innerHTML)
                       }
                     };
                     request.open("GET", "data.json", true);
@@ -213,7 +213,7 @@ Include weekends?
 Include vacation?
 <input type="checkbox" name="mailing_list">
 Number of credits selected:
-<p id="demo"></p>
+<span id="credittotal"></span>
 <h2>Autocomplete</h2>
 
 <p>Start typing:</p>

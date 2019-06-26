@@ -190,9 +190,9 @@ input[type=submit] {
                  document.getElementById("add").onclick = function() {
                     //First things first, we need our text:
                     var text = document.getElementById("myInput").value; //.value gets input values
-                    var list = document.getElementsByTagName("UL");
+                    var list = document.getElementsByTagName("UL")[0];
                     alert(list)
-                    if (list.every(list.getElementsByTagName("LI").innerHTML != text)){
+                    if (list.getElementsByTagName("LI").every(list.getElementsByTagName("LI").innerHTML != text)){
                       var node = document.createElement("LI");                 // Create a <li> node
                       var textnode = document.createTextNode(text);         // Create a text node
                       node.appendChild(textnode);

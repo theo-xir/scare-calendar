@@ -202,7 +202,7 @@ input[type=submit] {
                           var obj = parseJSON(request.responseText);
                           document.getElementById("credittotal").innerHTML = parseInt(obj[text].credits) + parseInt(document.getElementById("credittotal").innerHTML)
                         }
-                      };
+                      }
                       request.open("GET", "data.json", true);
                       request.send();
                       document.getElementById('myInput').value = ''

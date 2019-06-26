@@ -196,6 +196,7 @@ input[type=submit] {
                     node.appendChild(textnode);
                     //Now use appendChild and add it to the list!
                     document.getElementById("list").appendChild(node);
+                    document.getElementById('myInput').value = ''
                 }
                }
 
@@ -214,7 +215,6 @@ input[type=submit] {
   <input type='button' value='add to list' id='add' />
 </form>
 <ul id='list'>
-  <li>Coffee</li>
 </ul>
 
 </body>

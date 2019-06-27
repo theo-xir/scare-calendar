@@ -216,6 +216,9 @@ button {
                       document.getElementById("unitlist").appendChild(node);
                       var button = document.createElement("button");
                       button.innerHTML = "<small> - </small>";
+                      button.addEventListener ("click", function() {
+                        alert("did something");
+                      });
                       document.getElementById("unitlist").appendChild(button);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {

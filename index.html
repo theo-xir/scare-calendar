@@ -205,7 +205,7 @@ input[type=submit] {
                       //Now use appendChild and add it to the list!
                       document.getElementById("unitlist").appendChild(node);
                       var button = document.createElement("button");
-                      button.innerHTML = "-";
+                      button.innerHTML = "<small> - </small>";
                       document.getElementById("unitlist").appendChild(button);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {

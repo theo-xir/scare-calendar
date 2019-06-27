@@ -214,9 +214,11 @@ button {
                       node.appendChild(textnode);
                       //Now use appendChild and add it to the list!
                       document.getElementById("unitlist").appendChild(node);
-                      var button = document.createElement("button");
-                      button.innerHTML = "<small> - </small>";
-                      document.getElementById("unitlist").appendChild(button);
+                      var span = document.createElement("SPAN");
+                      var txt = document.createTextNode("\u00D7");
+                      span.className = "close";
+                      span.appendChild(txt);
+                      node.appendChild(span);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           var obj = parseJSON(request.responseText);

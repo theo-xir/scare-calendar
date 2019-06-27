@@ -206,8 +206,7 @@ input[type=submit] {
                       document.getElementById("unitlist").appendChild(node);
                       var button = document.createElement("button");
                       button.innerHTML = "-";
-                      var body = document.getElementsById("unitlist")[0];
-                      body.appendChild(button);
+                      document.getElementsById("unitlist").appendChild(button);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           var obj = parseJSON(request.responseText);

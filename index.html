@@ -204,6 +204,10 @@ input[type=submit] {
                       node.appendChild(textnode);
                       //Now use appendChild and add it to the list!
                       document.getElementById("unitlist").appendChild(node);
+                      var button = document.createElement("button");
+                      button.innerHTML = "-";
+                      var body = document.getElementsById("unitlist")[0];
+                      body.appendChild(button);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           var obj = parseJSON(request.responseText);
@@ -216,6 +220,7 @@ input[type=submit] {
                       }
                       else {
                         alert("Unit " + text + " has already been selected.")
+                        document.getElementById('myInput').value = ''
                       }
                     }
 

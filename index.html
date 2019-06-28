@@ -214,7 +214,6 @@ input[type=submit] {
                       button.innerHTML = "-";
                       button.addEventListener ("click", function() {
                         var unitr = button.parentElement.childNodes[0].nodeValue
-                        alert(unitr)
                         var listelement= button.parentElement.parentElement
                         listelement.parentElement.removeChild(listelement)
                         var obj = parseJSON(request.responseText);

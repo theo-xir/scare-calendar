@@ -48,16 +48,6 @@ input[type=submit] {
   right: 0;
 }
 
-button {
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
@@ -209,17 +199,19 @@ button {
                       }
                     }
                     if (!flag){
+                      var para = document.createElement("p");
                       var node = document.createElement("LI");                 // Create a <li> node
                       var textnode = document.createTextNode(text);         // Create a text node
                       node.appendChild(textnode);
                       //Now use appendChild and add it to the list!
-                      document.getElementById("unitlist").appendChild(node);
+                      para.appendChild(node);
                       var button = document.createElement("button");
-                      button.innerHTML = "<small> - </small>";
+                      button.innerHTML = "-";
                       button.addEventListener ("click", function() {
                         alert("did something");
                       });
-                      document.getElementById("unitlist").appendChild(button);
+                      para.appendChild(button);
+                      document.getElementById("unitlist").appendChild(para);
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           var obj = parseJSON(request.responseText);

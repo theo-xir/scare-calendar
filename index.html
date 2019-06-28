@@ -213,7 +213,7 @@ input[type=submit] {
                       var button = document.createElement("button");
                       button.innerHTML = "-";
                       button.addEventListener ("click", function() {
-                        var unitr = button.parentElement.nextSibling.innerHTML
+                        var unitr = button.parentElement.textContent
                         alert(unitr)
                         var listelement= button.parentElement.parentElement
                         listelement.parentElement.removeChild(listelement)

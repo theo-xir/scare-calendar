@@ -214,7 +214,7 @@ input[type=submit] {
                       button.innerHTML = "-";
                       button.addEventListener ("click", function() {
                         var listelement= button.parentElement.nodeName
-                        element.parentNode.removeChild(element)
+                        listelement.parentNode.removeChild(element)
                       });
                       para.appendChild(button);
                       node.appendChild(para);

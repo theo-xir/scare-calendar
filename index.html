@@ -210,17 +210,15 @@ input[type=submit] {
                       var node = document.createElement("LI");                 // Create a <li> node
                       var textnode = document.createTextNode(text);         // Create a text node
                       para.appendChild(textnode);
-                      //Now use appendChild and add it to the list!
-
                       var button = document.createElement("button");
                       button.innerHTML = "-";
                       button.addEventListener ("click", function() {
-                        alert("did something");
+                        var listelement= button.parentElement.nodeName
+                        element.parentNode.removeChild(element)
                       });
                       para.appendChild(button);
                       node.appendChild(para);
                       document.getElementById("unitlist").appendChild(node);
-
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           var obj = parseJSON(request.responseText);

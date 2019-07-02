@@ -4,11 +4,21 @@ fs.readFile( 'data.json', (err, data) => {
     if (err) throw err
     var obj = JSON.parse(data.toString())
     entries = Object.entries(obj)
-    convertdates("Thu 08 Nov 2018");
+    entries=setdatesintableformat(entries)
     entries=elim0null(entries)
     entries=elimresits(entries)
     entries=setexamdates(entries)
     printdata(entries)
+    var fs = require('fs');
+    var entries_object = {};
+    for (i = 0; i < entries.length; i++) {
+      entries_object[entries[i][0]] = entries[i][1];
+    }
+    fs.writeFile("altereddata.json", JSON.stringify(entries_object), function(err){
+      if (err) {
+        console.log(err)
+      }
+    })
 })
 
 function printdata(entries){
@@ -44,13 +54,26 @@ function elimresits(entries){
   }
   return entries
 }
+
+function setdatesintableformat(entries){
+  for (i=0;i<entries.length;i++){
+    for (j = 0; j < entries[i][1].assessments.length; j++) {
+      if (entries[i][1].assessments[j].deadline!='Not Set') {
+        date=convertdates(entries[i][1].assessments[j].deadline)
+        entries[i][1].assessments[j].deadline=[date[0],date[3]]
+      }
+    }
+  }
+  return entries
+}
+
 function setexamdates(entries){
   for (i=0;i<entries.length;i++){
     exams=[]
     for (j = 0; j < entries[i][1].assessments.length; j++) {
       if (entries[i][1].assessments[j].deadline=='Not Set') {
         if (parseInt(entries[i][1].tb)==1){
-          entries[i][1].assessments[j].deadline=[0,3]
+          entries[i][1].assessments[j].deadline=[0,2]
         }
         if (parseInt(entries[i][1].tb)==2){
           entries[i][1].assessments[j].deadline=[0,20]
@@ -64,7 +87,7 @@ function setexamdates(entries){
       entries[i][1].assessments[exams[0]].deadline=[0,20]
     }
     if (exams.length==2){
-      entries[i][1].assessments[exams[0]].deadline=[0,3]
+      entries[i][1].assessments[exams[0]].deadline=[0,2]
       entries[i][1].assessments[exams[1]].deadline=[0,20]
     }
   }
@@ -95,9 +118,4 @@ function getWeekNumber(y,m,d) {
     var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
     // Return array of year and week number
     return [d.getUTCFullYear(), weekNo];
-}
-
-
-function maketable(entries){
-
 }

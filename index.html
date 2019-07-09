@@ -72,7 +72,32 @@ input[type=submit] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
 
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
 
 </style>
     </head>
@@ -220,6 +245,16 @@ input[type=submit] {
                         var listelement= button.parentElement.parentElement
                         listelement.parentElement.removeChild(listelement)
                         document.getElementById("credittotal").innerHTML = - parseInt(obj[unitr].credits) + parseInt(document.getElementById("credittotal").innerHTML)
+                        if (parseInt(obj[unitr].tb)==1){
+                          document.getElementById("tb1credits").innerHTML = - parseInt(obj[unitr].credits) + parseInt(document.getElementById("tb1credits").innerHTML)
+                        }
+                        else if (parseInt(obj[unitr].tb)==2){
+                          document.getElementById("tb2credits").innerHTML = - parseInt(obj[unitr].credits) + parseInt(document.getElementById("tb2credits").innerHTML)
+                        }
+                        else if (parseInt(obj[unitr].tb)==4){
+                          document.getElementById("tb1credits").innerHTML = - parseInt(obj[unitr].credits)/2 + parseInt(document.getElementById("tb1credits").innerHTML)
+                          document.getElementById("tb2credits").innerHTML = - parseInt(obj[unitr].credits)/2 + parseInt(document.getElementById("tb2credits").innerHTML)
+                        }
                       });
                       para.appendChild(button);
                       node.appendChild(para);
@@ -227,6 +262,16 @@ input[type=submit] {
                       request.onreadystatechange = function() {
                         if (request.readyState == 4 && request.status == 200) {
                           document.getElementById("credittotal").innerHTML = parseInt(obj[text].credits) + parseInt(document.getElementById("credittotal").innerHTML)
+                          if (parseInt(obj[text].tb)==1){
+                            document.getElementById("tb1credits").innerHTML = + parseInt(obj[text].credits) + parseInt(document.getElementById("tb1credits").innerHTML)
+                          }
+                          else if (parseInt(obj[text].tb)==2){
+                            document.getElementById("tb2credits").innerHTML = + parseInt(obj[text].credits) + parseInt(document.getElementById("tb2credits").innerHTML)
+                          }
+                          else if (parseInt(obj[text].tb)==4){
+                            document.getElementById("tb1credits").innerHTML = + parseInt(obj[text].credits)/2 + parseInt(document.getElementById("tb1credits").innerHTML)
+                            document.getElementById("tb2credits").innerHTML = + parseInt(obj[text].credits)/2 + parseInt(document.getElementById("tb2credits").innerHTML)
+                          }
                         }
                       }
                       request.open("GET", "data.json", true);
@@ -302,22 +347,67 @@ input[type=submit] {
                         }
                         else x=assessment["deadline"][1]+13
                         d=assessment["deadline"][0]
-                        document.querySelector(`#table > table tr:nth-of-type(${x+1}) td:nth-of-type(${d+1})`).innerHTML+="deadline"
+                        var span =document.createElement("span");
+                        span.setAttribute('class', 'tooltip')
+                        span.textContent="!"
+                        var tspan =document.createElement("span");
+                        tspan.setAttribute('class', 'tooltiptext')
+                        var credits=obj[unit].credits
+                        var weight=parseInt(assessment["weight"])/100
+                        var string = " credits. \n"
+                        if ((credits*weight)<=1){
+                          string=" credit. \n"
+                        }
+                        tspan.textContent="Deadline for " + unit + ", worth " + obj[unit].credits*parseInt(assessment["weight"])/100 + string
+                        span.appendChild(tspan)
+                        document.querySelector(`#table > table tr:nth-of-type(${x+1}) td:nth-of-type(${d+1})`).appendChild(span)
+                    }
+                  }
+                  var worktable = []
+                  for (var j=0;j<36;j++){
+                    worktable.push([0,0,0,0,0,0,0])
+                  }
+                  for (var i=0;i<36;i++){
+                    if ((i>14 && i<17) || (i>32 && i<36)){
+                      for (var j=0;j<7;j++){
+                        worktable[i][j]='X'
                       }
                     }
                   }
+                  if (!document.getElementById("weekends").checked){
+                    for (var i=0;i<36;i++){
+                      worktable[i][5]='X'
+                      worktable[i][6]='X'
+                    }
+                  }
+                  alert(worktable)
+                  // for (var i=0;i<33;i++){
+                  //   for (var j=0; j<7; j++){
+                  //     worktable[i][j]=parseInt(document.getElementById("credittotal").innerHTML)/252
+                  //   }
+                  // }
                }
+             }
      </script>
 <body onload="load()">
+<p>
 Include weekends?
-<input type="checkbox" name="weekends">
+<input type="checkbox" id="weekends">
+</p>
+<p>
 Include vacation?
 <input type="checkbox" name="vacation">
+</p>
+<p>
 Number of credits selected:
 <span id="credittotal">0</span>
-<h2>Autocomplete</h2>
-
-<p>Start typing:</p>
+(TB1:
+ <span id="tb1credits">0</span>
+ , TB2:
+ <span id="tb2credits">0</span>
+)
+</p>
+<p>Select units:</p>
 
 <!--Make sure the form has the autocomplete function switched off:-->
 <form autocomplete="off" action="/action_page.php">

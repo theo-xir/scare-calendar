@@ -71,7 +71,9 @@ function setexamdates(entries){
   for (i=0;i<entries.length;i++){
     exams=[]
     for (j = 0; j < entries[i][1].assessments.length; j++) {
+      entries[i][1].assessments[j].type="nonexam"
       if (entries[i][1].assessments[j].deadline=='Not Set') {
+        entries[i][1].assessments[j].type="exam"
         if (parseInt(entries[i][1].tb)==1){
           entries[i][1].assessments[j].deadline=[0,2]
         }

@@ -358,7 +358,7 @@ input[type=submit] {
                         if ((credits*weight)<=1){
                           string=" credit. \n"
                         }
-                        tspan.textContent="Deadline for " + unit + ", worth " + obj[unit].credits*parseInt(assessment["weight"])/100 + string
+                        tspan.textContent="Deadline for " + unit + ", worth " + credits*weight + string
                         span.appendChild(tspan)
                         document.querySelector(`#table > table tr:nth-of-type(${x+1}) td:nth-of-type(${d+1})`).appendChild(span)
                     }
@@ -380,14 +380,162 @@ input[type=submit] {
                       worktable[i][6]='X'
                     }
                   }
-                  alert(worktable)
-                  // for (var i=0;i<33;i++){
-                  //   for (var j=0; j<7; j++){
-                  //     worktable[i][j]=parseInt(document.getElementById("credittotal").innerHTML)/252
-                  //   }
-                  // }
+                  if (!document.getElementById("vacation").checked){
+                    for (var i=0;i<36;i++){
+                      if ((i>12 && i<16) || i+1>26 && i+1<30){
+                        for (var j=0;j<7;j++){
+                          worktable[i][j]='X'
+                        }
+                      }
+                    }
+                  }
+                  var week = 0
+                  var day = 0
+                  var pweek = 0
+                  var pday = 0
+                  var peweek = 0
+                  var peday = 0
+                  var credits =0
+                  var weight=0
+                  var assvaliddays=0
+                  var number=0
+                  for (unit of units){
+                    if(obj[unit].tb=="2"){
+                      pweek=17
+                      peweek=17
+                    }
+                    else {
+                      pweek=0
+                      peweek=0
+                    }
+                    for (assessment of obj[unit]["assessments"]){
+                      assvaliddays=0
+                      if (assessment["deadline"][1]>40){
+                        week=assessment["deadline"][1]-40
+                      }
+                      else week=assessment["deadline"][1]+13
+                      day=assessment["deadline"][0]
+                      credits=obj[unit].credits
+                      weight=parseInt(assessment["weight"])/100
+                      if (assessment.type=="nonexam"){
+                        for (var i=pweek; i<week+1; i++){
+                          if (i==pweek){
+                            for (var j=pday; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                assvaliddays++
+                              }
+                            }
+                          }
+                          else if (i==week){
+                            for (var j=0; j<day;j++){
+                              if (worktable[i][j]!='X'){
+                                assvaliddays++
+                              }
+                            }
+                          }
+                          else {
+                            for (var j=0; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                assvaliddays++
+                              }
+                            }
+                          }
+                        }
+                        number=credits*weight/assvaliddays
+                        for (var i=pweek; i<week+1; i++){
+                          if (i==pweek){
+                            for (var j=pday; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                worktable[i][j]+=number
+                              }
+                            }
+                          }
+                          else if (i==week){
+                            for (var j=0; j<day;j++){
+                              if (worktable[i][j]!='X'){
+                                worktable[i][j]+=number
+                              }
+                            }
+                          }
+                          else {
+                            for (var j=0; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                worktable[i][j]+=number
+                              }
+                            }
+                          }
+                        }
+                        pweek=week
+                        pday=day
+                      }
+                      else if (assessment.type=="exam"){
+                        for (var i=peweek; i<week+1; i++){
+                            for (var j=0; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                assvaliddays++
+                              }
+                            }
+                          }
+                          number=credits*weight/assvaliddays
+                          for (var i=peweek; i<week+1; i++){
+                            for (var j=0; j<7;j++){
+                              if (worktable[i][j]!='X'){
+                                worktable[i][j]+=number
+                              }
+                            }
+                          }
+                          peweek=week
+                          peday=day
+                      }
+                  }
+               }
+               validdaystb1=0
+               for (var i=0;i<16;i++){
+                 for (var j=0; j<7; j++){
+                   if (worktable[i][j]!='X'){
+                     validdaystb1++
+                   }
+                 }
+               }
+               validdaystb2=0
+               for (var i=17;i<33;i++){
+                 for (var j=0; j<7; j++){
+                   if (worktable[i][j]!='X'){
+                     validdaystb2++
+                   }
+                 }
+               }
+               for (var i=0;i<16;i++){
+                 for (var j=0; j<7; j++){
+                   if (worktable[i][j]!='X'){
+                     worktable[i][j]/=parseInt(document.getElementById("tb1").options[document.getElementById("tb1").selectedIndex].text)/validdaystb1
+                   }
+                 }
+               }
+               for (var i=16;i<33;i++){
+                 for (var j=0; j<7; j++){
+                   if (worktable[i][j]!='X'){
+                     worktable[i][j]/=parseInt(document.getElementById("tb2").options[document.getElementById("tb2").selectedIndex].text)/validdaystb2
+                   }
+                 }
+               }
+               alert(worktable)
+               table=document.getElementById("table").children[0].children[1]
+               for (var i=0; i<33; i++){
+                 for (var j=0; j<33; j++){
+                   if (worktable[i][j]<0.95){
+                     table.children[i].children[j+1].style.backgroundColor = '#75C124'
+                   }
+                   else if (worktable[i][j]>=0.95 && worktable[i][j]<=1.05){
+                     table.children[i].children[j+1].style.backgroundColor = '#E7FF33'
+                   }
+                   else if (worktable[i][j]>1.05){
+                     table.children[i].children[j+1].style.backgroundColor = '#FF9B31'
+                   }
+                 }
                }
              }
+           }
      </script>
 <body onload="load()">
 <p>
@@ -396,7 +544,7 @@ Include weekends?
 </p>
 <p>
 Include vacation?
-<input type="checkbox" name="vacation">
+<input type="checkbox" id="vacation">
 </p>
 <p>
 Number of credits selected:
@@ -407,6 +555,39 @@ Number of credits selected:
  <span id="tb2credits">0</span>
 )
 </p>
+<span>
+        Compare with a
+         <select id = "tb1">
+            <option value = "10">10</option>
+            <option value = "20">20</option>
+            <option value = "30">30</option>
+            <option value = "40">40</option>
+            <option value = "50">50</option>
+            <option value = "60" selected>60</option>
+            <option value = "70">70</option>
+            <option value = "80">80</option>
+            <option value = "90">90</option>
+            <option value = "100">100</option>
+            <option value = "110">110</option>
+            <option value = "120">120</option>
+         </select>
+              -
+               <select id = "tb2">
+                  <option value = "10">10</option>
+                  <option value = "20">20</option>
+                  <option value = "30">30</option>
+                  <option value = "40">40</option>
+                  <option value = "50">50</option>
+                  <option value = "60" selected>60</option>
+                  <option value = "70">70</option>
+                  <option value = "80">80</option>
+                  <option value = "90">90</option>
+                  <option value = "100">100</option>
+                  <option value = "110">110</option>
+                  <option value = "120">120</option>
+               </select>
+               split.
+    </span>
 <p>Select units:</p>
 
 <!--Make sure the form has the autocomplete function switched off:-->

@@ -18,6 +18,11 @@ body {
   display: inline-block;
 }
 
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
 button {
   text-align: center;
   text-decoration: none;
@@ -535,9 +540,42 @@ input[type=submit] {
                  }
                }
              }
+             var button = document.getElementById("addassessment")
+             button.addEventListener ("click", function() {
+               row=document.createElement("tr")
+               cell1=document.createElement("td")
+               var name = document.getElementById("customAssessment").value;
+               var text = document.getElementById("customAssessment").value;
+               cell1.innerHTML=text
+               row.appendChild(cell1)
+               cell2=document.createElement("td")
+               var weight = document.getElementById("assessmentWeight").value;
+               cell2.innerHTML=weight
+               row.appendChild(cell2)
+               cell3=document.createElement("td")
+               var w = document.getElementById("assessmentWeek")
+               var week = w.options[w.selectedIndex].text;
+               cell3.innerHTML=week
+               row.appendChild(cell3)
+               cell4=document.createElement("td")
+               var d = document.getElementById("assessmentDay")
+               var day = d.options[d.selectedIndex].text;
+               cell4.innerHTML=day
+               row.appendChild(cell4)
+               var button = document.createElement("button");
+               button.innerHTML = "-";
+               button.addEventListener("click", function(){
+                 var listelement= button.parentElement.parentElement
+                 listelement.parentElement.removeChild(listelement)
+               })
+               row.appendChild(button)
+               document.getElementById('assessmenttable').appendChild(row)
+             })
            }
+
      </script>
 <body onload="load()">
+<div style="float:left; margin:30px">
 <p>
 Include weekends?
 <input type="checkbox" id="weekends">
@@ -598,7 +636,98 @@ Number of credits selected:
   <input type='button' value='add to list' id='add' />
 </form>
 <ul id='unitlist'></ul>
+
 <input type='button' value='generate table' id='generate' />
 <para id="table"> </para>
+</div>
+<div style="float:left; margin:30px">
+  <p id='customunit'> Add your own unit:
+    <form>
+      <div style="width:300px;">
+        <label for="customUnit">Name of unit:</label>
+        <input id="customUnit" type="text" name="myCustomUnit" placeholder="Custom Unit">
+        <label for="customUnitCredits">Number of credits the unit is worth:</label>
+        <select id="customUnitCredits" name="myCustomUnitCredits" >
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+        <label for="tb">Teaching Block:</label>
+        <select id="tb" name="teachingBlock">
+          <option value="1">Teaching Block 1</option>
+          <option value="2">Teaching Block 2</option>
+          <option value="4">Teaching Block 4</option>
+        </select>
+        <p> Add an assessment: </p>
+        <label for="customAssessment">Name of assessment:</label>
+        <input id="customAssessment" type="text" name="myCustomAssessment" placeholder="Custom Assessment">
+        <input id="assessmentWeight" type="number"  onkeydown="javascript: return event.keyCode == 69 ? false : true" name="weight" min="1" max="100" />
+        <label for="assessmentWeight">% of unit</label>
+        <label for="assessmentWeek">Week:</label>
+        <select id="assessmentWeek" name="assessmentWeek">
+          <option value="1">Week 1</option>
+          <option value="2">Week 2</option>
+          <option value="3">Week 3</option>
+          <option value="4">Week 4</option>
+          <option value="5">Week 5</option>
+          <option value="6">Week 6</option>
+          <option value="7">Week 7</option>
+          <option value="8">Week 8</option>
+          <option value="9">Week 9</option>
+          <option value="10">Week 10</option>
+          <option value="11">Week 11</option>
+          <option value="12">Week 12</option>
+          <option value="W1">Winter vacation, week 1</option>
+          <option value="W2">Winter vacation, week 2</option>
+          <option value="W3">Winter vacation, week 3</option>
+          <option value="WE1">Winter exams, week 1</option>
+          <option value="WE2">Winter exams, week 2</option>
+          <option value="13">Week 13</option>
+          <option value="14">Week 14</option>
+          <option value="15">Week 15</option>
+          <option value="16">Week 16</option>
+          <option value="17">Week 17</option>
+          <option value="18">Week 18</option>
+          <option value="19">Week 19</option>
+          <option value="20">Week 20</option>
+          <option value="21">Week 21</option>
+          <option value="S1">Spring vacation, week 1</option>
+          <option value="S2">Spring vacation, week 2</option>
+          <option value="S3">Spring vacation, week 3</option>
+          <option value="22">Week 22</option>
+          <option value="23">Week 23</option>
+          <option value="24">Week 24</option>
+          <option value="R">Revision Week</option>
+          <option value="SE1">Summer exams, week 1</option>
+          <option value="SE2">Summer exams, week 2</option>
+          <option value="SE3">Summer exams, week 3</option>
+        </select>
+        <label for="assessmentDay">Day:</label>
+        <select id="assessmentDay" name="day">
+          <option value="0">Monday</option>
+          <option value="1">Tuesday</option>
+          <option value="2">Wednesday</option>
+          <option value="3">Thursday</option>
+          <option value="4">Friday</option>
+          <option value="5">Saturday</option>
+          <option value="6">Sunday</option>
+        </select>
+        <input type="checkbox" name="exam"> Exam<br>
+        <input type='button' value='Add assessment' id='addassessment' />
+        <p> Assessments:
+          <table id='assessmenttable'>
+            <tr>
+              <th>Name</th>
+              <th>Weight</th>
+              <th>Week</th>
+              <th>Day</th>
+            </tr>
+        </p>
+      </div>
+    </form>
+  </p>
+</div>
 </body>
 </html>

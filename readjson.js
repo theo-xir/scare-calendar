@@ -75,10 +75,10 @@ function setexamdates(entries){
       if (entries[i][1].assessments[j].deadline=='Not Set') {
         entries[i][1].assessments[j].type="exam"
         if (parseInt(entries[i][1].tb)==1){
-          entries[i][1].assessments[j].deadline=[0,2]
+          entries[i][1].assessments[j].deadline=[0,3]
         }
         if (parseInt(entries[i][1].tb)==2){
-          entries[i][1].assessments[j].deadline=[0,20]
+          entries[i][1].assessments[j].deadline=[0,21]
         }
         if (parseInt(entries[i][1].tb)==4){
           exams.push(j)

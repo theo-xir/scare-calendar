@@ -109,12 +109,14 @@ input[type=submit] {
           <script>
               var request = new XMLHttpRequest();
               var obj = {};
+              var customObj = {};
               var units = [];
               function load()
               {
                 request.onreadystatechange = function() {
                   if (request.readyState == 4 && request.status == 200) {
                     obj = parseJSON(request.responseText);
+                    console.log(obj)
                     fill(obj)
                   }
                 };
@@ -235,8 +237,10 @@ input[type=submit] {
                  document.getElementById("add").onclick = function() {
                     //First things first, we need our text:
                     var text = document.getElementById("myInput").value; //.value gets input values
-                    add(text)
+                    if (text.length>0){
+                      add(text)
                     }
+                  }
                     function add(text){
                       var ul = document.getElementById("unitlist");
                       var items = ul.getElementsByTagName("li");
@@ -597,6 +601,18 @@ input[type=submit] {
                  row.appendChild(button)
                  document.getElementById('assessmenttable').appendChild(row)
                }
+               if ((total+parseInt(document.getElementById("assessmentWeight").value))===100){
+                 document.getElementById("addcustomunit").style.visibility = "visible"
+               }
+             })
+             button = document.getElementById("addcustomunit")
+             button.addEventListener ("click", function() {
+               if (document.getElementById("customUnit").value.length == 0){
+                 alert("Please name the custom unit.")
+               }
+               else{
+
+               }
              })
            }
 
@@ -656,6 +672,14 @@ Number of credits selected:
                </select>
                split.
     </span>
+<p>Select custom units</p>
+<form autocomplete="off" action="/action_page.php">
+  <div class="autocomplete" style="width:300px;">
+    <input id="myCustomInput" type="text" name="myCustomUnit" placeholder="Custom Unit">
+  </div>
+  <input type='button' value='add to list' id='addCustom' />
+  <input type='button' value='add all to list' id='addallCustom' />
+</form>
 <p>Select units:</p>
 
 <!--Make sure the form has the autocomplete function switched off:-->
@@ -756,9 +780,11 @@ Number of credits selected:
               <th>Week</th>
               <th>Day</th>
             </tr>
+          </table>
         </p>
       </div>
   </p>
+  <input type='button' value='Add custom unit' id='addcustomunit' style="visibility:hidden;" />
 </div>
 </body>
 </html>
